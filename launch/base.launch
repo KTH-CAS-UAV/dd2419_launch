@@ -42,8 +42,7 @@
       <param name="frame_rate" value="60"/>
       
       <param name="timestamp_method" value="start"/>
-      <param name="camera_info_url" value="file:///home/usr/.ros/camera_info/calibration.txt"/>
-      <param name="camera_info_url" value="$(find dd2419_launch camera.yaml)"/>
+      <param name="camera_info_url" value="file://$(find dd2419_launch)/calibration/camera.yaml"/>
 
       <!-- Values defined at https://ken.tossell.net/libuvc/doc/group__ctrl.html#gaa583133ed035c141c42061d5c13a36bf -->
       <param name="auto_exposure" value="2" />
