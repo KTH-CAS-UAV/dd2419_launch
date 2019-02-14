@@ -25,7 +25,7 @@
   <arg name="use_aruco"     default="1"/>
   <arg name="use_crazyflie" default="1"/>
 
-  <group ns="camera" if="$(arg use_camera)">
+  <group ns="cf1/camera" if="$(arg use_camera)">
     <node pkg="libuvc_camera" type="camera_node" name="camera" output="screen">
       <!-- Parameters used to find the camera. Set to empty string to disable,
            otherwise old parameters will linger in ROS. -->
@@ -54,17 +54,17 @@
   </group>
 
   <node pkg="image_proc" type="image_proc" name="image_proc" if="$(arg use_camera)">
-    <remap from="image_raw"        to="/camera/image_raw"/>
-    <remap from="camera_info"      to="/camera/camera_info"/>
-    <remap from="image_mono"       to="/camera/image_mono"/>
-    <remap from="image_color"      to="/camera/image_color"/>
-    <remap from="image_rect"       to="/camera/image_rect"/>
-    <remap from="image_rect_color" to="/camera/image_rect_color"/>
+    <remap from="image_raw"        to="/cf1/camera/image_raw"/>
+    <remap from="camera_info"      to="/cf1/camera/camera_info"/>
+    <remap from="image_mono"       to="/cf1/camera/image_mono"/>
+    <remap from="image_color"      to="/cf1/camera/image_color"/>
+    <remap from="image_rect"       to="/cf1/camera/image_rect"/>
+    <remap from="image_rect_color" to="/cf1/camera/image_rect_color"/>
   </node>
 
   <node pkg="aruco_ros" type="marker_publisher" name="aruco" output="screen" if="$(arg use_aruco)">
-    <remap from="/camera_info" to="/camera/camera_info" />
-    <remap from="/image"       to="/camera/image_raw" />
+    <remap from="/camera_info" to="/cf1/camera/camera_info" />
+    <remap from="/image"       to="/cf1/camera/image_raw" />
     <param name="image_is_rectified" value="false"/>
     <param name="marker_size"        value="$(arg marker_size)"/>
     <!-- frame in which the marker pose will be refered, leave empty and the
@@ -92,7 +92,7 @@
     <remap from="add_crazyflie" to="/cf1/add_crazyflie"/>
   </node>
 
-  <node pkg="tf2_ros" type="static_transform_publisher" name="cf_camera_trans" args="0 0 0.02 -1.54 0 -1.54 cf1/base_link camera" if="$(arg use_crazyflie)" />
+  <node pkg="tf2_ros" type="static_transform_publisher" name="cf_camera_trans" args="0 0 0.02 -1.54 0 -1.54 cf1/base_link cf1/camera_link" if="$(arg use_crazyflie)" />
 
   <node pkg="topic_tools" type="transform" name="base_link_publisher" args="/cf1/pose /tf tf/tfMessage '[[geometry_msgs.msg.TransformStamped(m.header, &quot;cf1/base_link&quot;, geometry_msgs.msg.Transform(m.pose.position, m.pose.orientation))]]' -i geometry_msgs" />
 
