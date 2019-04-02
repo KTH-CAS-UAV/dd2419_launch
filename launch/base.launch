@@ -92,7 +92,8 @@
     <remap from="add_crazyflie" to="/cf1/add_crazyflie"/>
   </node>
 
-  <node pkg="tf2_ros" type="static_transform_publisher" name="cf_camera_trans" args="0 0 0.02 -1.54 0 -1.54 cf1/base_link cf1/camera_link" if="$(arg use_crazyflie)" />
+  <!-- A guess at the transformation from base_link to camera. -->
+  <!--node pkg="tf2_ros" type="static_transform_publisher" name="cf_camera_trans" args="0.01 0 0.02 -1.57 0 -1.57 cf1/base_link cf1/camera_link" if="$(arg use_crazyflie)" /-->
 
   <node pkg="topic_tools" type="transform" name="base_link_publisher" args="/cf1/pose /tf tf/tfMessage '[[geometry_msgs.msg.TransformStamped(m.header, &quot;cf1/base_link&quot;, geometry_msgs.msg.Transform(m.pose.position, m.pose.orientation))]]' -i geometry_msgs" />
 
